@@ -26,8 +26,7 @@ Widget build(BuildContext context) {
       ),
       body: const TabBarView(
         children: [
-        Text('Tabs are exactly what you think it is. It’s part of the UI that navigates the user through different routes(ie, pages) when clicked upon. The use of tabs in applications is standard practice. Flutter provides a simple way to create tab layouts using the material library. In this article, exploring we will be exploring the same in detail.'),
-        Text('Tabs are exactly what you think it is. It’s part of the UI that navigates the user through different routes(ie, pages) when clicked upon. The use of tabs in applications is standard practice. Flutter provides a simple way to create tab layouts using the material library. In this article, exploring we will be exploring the same in detail.'),
+        Text(' icked upon. The use of tabs in applications is standard practice. Flutter provides a simple way to create tab layouts using the material library. In this article, exploring we will be exploring the same in detail.'),
         Text('Tabs are exactly what you think it is. It’s part of the UI that navigates the user through different routes(ie, pages) when clicked upon. The use of tabs in applications is standard practice. Flutter provides a simple way to create tab layouts using the material library. In this article, exploring we will be exploring the same in detail.'),
         ],
        ),
