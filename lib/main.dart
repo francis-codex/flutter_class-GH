@@ -1,60 +1,52 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    const title = 'Gesture Demo';
-
-    return const MaterialApp(
-      title: title,
-      home: MyHomePage(title: title),
-    );
-  }
+void main() {
+  runApp(const CupertinoApp(
+    title: 'Navigation Basics',
+    home: FirstRoute(),
+  ));
 }
 
-class MyHomePage extends StatelessWidget {
-  final String title;
-
-  const MyHomePage({super.key, required this.title});
+class FirstRoute extends StatelessWidget {
+  const FirstRoute({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('First Route'),
       ),
-      body: const Center(
-        child: MyButton(),
-      ),
-    );
-  }
-}
-
-class MyButton extends StatelessWidget {
-  const MyButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // The GestureDetector wraps the button.
-    return GestureDetector(
-      // When the child is tapped, show a snackbar.
-      onTap: () {
-        const snackBar = SnackBar(content: Text('Tap'));
-
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      },
-      // The custom button
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.lightBlue,
-          borderRadius: BorderRadius.circular(8),
+      child: Center(
+        child: CupertinoButton(
+          child: const Text('Second Route'),
+          onPressed: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (context) => const SecondRoute()),
+            );
+          },
         ),
-        child: const Text('My Button'),
+      ),
+    );
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  const SecondRoute({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('Second Route'),
+      ),
+      child: Center(
+        child: CupertinoButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text(''),
+        ),
       ),
     );
   }
