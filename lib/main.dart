@@ -1,52 +1,85 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const CupertinoApp(
-    title: 'Navigation Basics',
-    home: FirstRoute(),
-  ));
+class Todo {
+  final String title;
+  final String description;
+
+  const Todo(this.title, this.description);
 }
 
-class FirstRoute extends StatelessWidget {
-  const FirstRoute({super.key});
+void main() {
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Passing Data',
+      home: TodosScreen(
+        todos: List.generate(
+          20,
+          (i) => Todo(
+            'Todo $i',
+            'A description of what needs to be done for Todo $i',
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+class TodosScreen extends StatelessWidget {
+  const TodosScreen({super.key, required this.todos});
+
+  final List<Todo> todos;
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('First Route'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Todos'),
       ),
-      child: Center(
-        child: CupertinoButton(
-          child: const Text('Second Route'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(builder: (context) => const SecondRoute()),
-            );
-          },
-        ),
+      body: ListView.builder(
+        itemCount: todos.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: const Icon(Icons.assignment), // Add icon here
+            title: Text(todos[index].title),
+            // When a user taps the ListTile, navigate to the DetailScreen.
+            // Notice that you're not only creating a DetailScreen, you're
+            // also passing the current todo through to it.
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const DetailScreen(),
+                  // Pass the arguments as part of the RouteSettings. The
+                  // DetailScreen reads the arguments from these settings.
+                  settings: RouteSettings(
+                    arguments: todos[index],
+                  ),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
 }
 
-class SecondRoute extends StatelessWidget {
-  const SecondRoute({super.key});
+class DetailScreen extends StatelessWidget {
+  const DetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Second Route'),
+    final todo = ModalRoute.of(context)!.settings.arguments as Todo;
+
+    // Use the Todo to create the UI.
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(todo.title),
       ),
-      child: Center(
-        child: CupertinoButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text(''),
-        ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Text(todo.description),
       ),
     );
   }
